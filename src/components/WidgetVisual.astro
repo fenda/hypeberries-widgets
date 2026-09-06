@@ -1,0 +1,120 @@
+---
+import type { WidgetVisual } from "../data/site";
+
+interface Props {
+	visual: WidgetVisual;
+	compact?: boolean;
+}
+
+const { visual, compact = false } = Astro.props;
+---
+
+<div class:list={["widget-visual", `widget-visual--${visual.type}`, `accent-${visual.accent}`, compact && "widget-visual--compact"]}>
+	{visual.type === "calendar" && (
+		<>
+			<p class="widget-visual__kicker">Calendar</p>
+			<p class="widget-visual__headline">{visual.subtitle}</p>
+			<ul class="widget-visual__list">
+				{visual.entries.map((entry) => <li><span>{entry.label}</span><strong>{entry.time}</strong></li>)}
+			</ul>
+		</>
+	)}
+
+	{visual.type === "weather" && (
+		<>
+			<p class="widget-visual__kicker">Weather</p>
+			<p class="widget-visual__location">{visual.location}</p>
+			<p class="widget-visual__temperature">{visual.temperature}</p>
+			<p class="widget-visual__condition">{visual.condition}</p>
+			<p class="widget-visual__range">{visual.range}</p>
+			<div class="widget-visual__forecast">
+				{visual.hours.map((hour) => <span><small>{hour.label}</small><strong>{hour.temp}</strong></span>)}
+			</div>
+		</>
+	)}
+
+	{visual.type === "reminders" && (
+		<>
+			<p class="widget-visual__kicker">Reminders</p>
+			<ul class="widget-visual__tasks">
+				{visual.items.map((item) => <li>{item}</li>)}
+			</ul>
+			<p class="widget-visual__footer">+ Add reminder</p>
+		</>
+	)}
+
+	{visual.type === "streaks" && (
+		<>
+				<p class="widget-visual__kicker">Streaks</p>
+			<ul class="widget-visual__metrics">
+				{visual.items.map((item) => <li><span><strong>{item.label}</strong><small>{item.note}</small></span><em>{item.value}</em></li>)}
+			</ul>
+		</>
+	)}
+
+	{visual.type === "goals" && (
+		<>
+			<p class="widget-visual__kicker">{visual.title}</p>
+			<div class="widget-visual__ring">
+				<span></span>
+				<div>
+					<p>{visual.progress}</p>
+					<small>{visual.subtitle}</small>
+				</div>
+			</div>
+			<div class="widget-visual__split">
+				<p>{visual.leftMetric}</p>
+				<p>{visual.rightMetric}</p>
+			</div>
+		</>
+	)}
+
+	{visual.type === "countdown" && (
+		<>
+			<p class="widget-visual__kicker">{visual.title}</p>
+			<div class="widget-visual__heart">♥</div>
+			<p class="widget-visual__days">{visual.days}</p>
+			<p class="widget-visual__subcopy">{visual.subtitle}</p>
+			<div class="widget-visual__bar"></div>
+		</>
+	)}
+
+	{visual.type === "environment" && (
+		<>
+			<p class="widget-visual__kicker">Environment</p>
+			<div class="widget-visual__duo">
+				{visual.metrics.map((metric) => <p><strong>{metric.value}</strong><small>{metric.label}</small></p>)}
+			</div>
+			<p class="widget-visual__subcopy">{visual.location}</p>
+		</>
+	)}
+
+	{visual.type === "chart" && (
+		<>
+			<p class="widget-visual__kicker">{visual.title}</p>
+			<p class="widget-visual__value">{visual.value}</p>
+			<p class="widget-visual__subcopy">{visual.note}</p>
+			<div class="widget-visual__chart" aria-hidden="true">
+				<span></span>
+			</div>
+		</>
+	)}
+
+	{visual.type === "reading" && (
+		<>
+			<p class="widget-visual__kicker">Reading</p>
+			<p class="widget-visual__book">{visual.title}</p>
+			<p class="widget-visual__subcopy">{visual.progress}</p>
+			<div class="widget-visual__progress"><span></span></div>
+		</>
+	)}
+
+	{visual.type === "focus" && (
+		<>
+			<p class="widget-visual__kicker">Focus</p>
+			<p class="widget-visual__book">{visual.title}</p>
+			<p class="widget-visual__subcopy">{visual.duration}</p>
+			<div class="widget-visual__play">▶</div>
+		</>
+	)}
+</div>

@@ -1,43 +1,55 @@
-# Astro Starter Kit: Minimal
+# Hypeberries Widgets
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Landing page for `widgets.hypeberries.com`, built with Astro and SCSS.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Stack
 
-## 🚀 Project Structure
+- Astro
+- SCSS
+- Static site output
+- Minimal JavaScript
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+  components/   Reusable page sections and widget mockups
+  data/         Local content for public and personal widgets
+  layouts/      Base page layout
+  pages/        Astro routes
+  styles/       SCSS partials and global styles
+public/
+  images/       Local image assets including the Hypeberries logo
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `npm run dev` starts the local development server
+- `npm run build` creates the production build in `dist/`
+- `npm run preview` serves the built site locally
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deploying to DreamHost
 
-## 🧞 Commands
+The GitHub Actions workflow deploys tagged releases to DreamHost. Add these
+repository secrets in GitHub before creating the first release tag:
 
-All commands are run from the root of the project, from a terminal:
+- `DREAMHOST_SSH_KEY`
+- `DREAMHOST_HOST`
+- `DREAMHOST_USER`
+- `DREAMHOST_TARGET`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Create and push a version tag to deploy:
 
-## 👀 Want to learn more?
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The deploy syncs `dist/` to `DREAMHOST_TARGET`. It uses `rsync --delete`, so
+the target should be the dedicated web root for this site.
+
+## Notes
+
+- Public widgets live in `src/data/site.ts`
+- Personal widgets are intentionally marked private and unavailable to download
+- Placeholder widget visuals are rendered locally so real screenshots can be swapped in later without restructuring the page

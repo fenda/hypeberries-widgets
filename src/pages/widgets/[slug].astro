@@ -1,0 +1,328 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { publicWidgets } from "../../data/site";
+
+export function getStaticPaths() {
+	return publicWidgets
+		.filter((widget) => widget.slug)
+		.map((widget) => ({
+		params: { slug: widget.slug },
+		props: { widget },
+		}));
+}
+
+const { widget } = Astro.props;
+type WidgetPageCopy = {
+	productName: string;
+	eyebrow: string;
+	h1: string;
+	seoTitle: string;
+	seoDescription: string;
+	lead: string;
+	overview: string;
+	features: string[];
+	howItWorks?: string[];
+	locationSettings?: Array<{ title: string; body: string }>;
+	requirements: string[];
+	installSteps: string[];
+	config: string;
+	configNotes: string[];
+	privacy: string;
+	troubleshooting: string[];
+};
+
+const pageCopyBySlug: Record<string, WidgetPageCopy> = {
+	calendar: {
+		productName: "Berries Calendar",
+		eyebrow: "Private Apple Calendar widget for macOS",
+		h1: "Apple Calendar widget for Übersicht",
+		seoTitle: "Berries Calendar: Private Apple Calendar Widget for macOS | Hypeberries",
+		seoDescription: "Berries Calendar is a private, configurable Apple Calendar widget for Übersicht on macOS. View upcoming events on your desktop with local EventKit access.",
+		lead: "See upcoming Apple Calendar events on your macOS desktop without opening Calendar, adding another account, or sending your schedule to a third-party service.",
+		overview: "Berries Calendar displays a focused, configurable agenda using the calendar colours already assigned in Apple Calendar. Each event includes its date, title, calendar name, and time or all-day status.",
+		features: [
+			"Upcoming Apple Calendar events directly on the desktop",
+			"Real calendar colours, recurring events, and multi-day all-day events",
+			"Calendar allow-lists, block-lists, and event-title filtering",
+			"Optional all-day-event filtering for every calendar or selected calendars",
+			"Adjustable desktop position, width, event limit, and column count",
+			"Local EventKit access with no external API calls",
+		],
+		howItWorks: [
+			"Übersicht renders the desktop widget.",
+			"A local Zsh launcher finds Node.js and starts the fetcher.",
+			"The fetcher runs a Swift and EventKit script to request Calendar access and read upcoming events.",
+			"The widget filters, formats, and renders the results on your desktop.",
+		],
+		requirements: [
+			"A Mac with Apple Calendar configured",
+			"Übersicht",
+			"Node.js",
+			"Swift from Xcode or the Xcode Command Line Tools",
+		],
+		installSteps: [
+			"Install and open Übersicht.",
+			"Download and unzip berries-calendar.widget.zip from the repository.",
+			"Copy berries-calendar.widget into ~/Library/Application Support/Übersicht/widgets/.",
+			"Refresh Übersicht and allow Calendar access when macOS asks.",
+		],
+		config: `{
+  "position": { "top": 40, "left": 40 },
+  "width": 480,
+  "limit": 5,
+  "columnCount": 1,
+  "lookaheadDays": 30,
+  "includeCalendars": [],
+  "excludeCalendars": [],
+  "excludeTitlePatterns": [],
+  "hideAllDayEvents": false,
+  "hideAllDayEventsFromCalendars": []
+}`,
+		configNotes: [
+			"Use includeCalendars or excludeCalendars to control which Apple Calendars appear.",
+			"Use excludeTitlePatterns to hide routine events by title; matching is case-insensitive.",
+			"Set hideAllDayEvents or hide all-day events from selected calendars while keeping their timed events.",
+		],
+		privacy: "The widget queries EventKit locally on your Mac. It does not use external APIs, analytics, telemetry, an account, or an API key, and it does not write Calendar or event data to disk.",
+		troubleshooting: [
+			"Node.js is required: install Node.js, then refresh Übersicht.",
+			"Calendar permission required: allow Calendar access for the process macOS identifies, then refresh Übersicht.",
+			"No upcoming events: increase lookaheadDays or check Apple Calendar.",
+			"All events filtered out: review the calendar and title-filter arrays in config.json.",
+		],
+	},
+	weather: {
+		productName: "Berries Weather",
+		eyebrow: "Minimal weather widget for macOS",
+		h1: "Weather widget for Übersicht on macOS",
+		seoTitle: "Berries Weather: Free macOS Weather Widget for Übersicht",
+		seoDescription: "Berries Weather is a compact, privacy-conscious weather widget for macOS Übersicht with automatic, city, or coordinate-based location.",
+		lead: "Keep current conditions, your location, a short forecast outlook, and today's low and high visible on your macOS desktop.",
+		overview: "Berries Weather is deliberately quiet: a small editorial card that adapts between day and night, giving you a useful desktop weather view without turning your screen into a dashboard.",
+		features: [
+			"Current temperature and location",
+			"Feels-like temperature when it meaningfully differs",
+			"A dominant weather outlook for the next 1 to 12 hours",
+			"Today's low and high, plus Celsius or Fahrenheit",
+			"Compact day and night visual treatment",
+			"Automatic refresh every 30 minutes",
+		],
+		locationSettings: [
+			{
+				title: "Automatic location",
+				body: "The default mode estimates a city and coordinates from your public IP through ipwho.is, then retrieves weather from Open-Meteo. It is zero-setup but approximate, especially when using a VPN, corporate network, or mobile carrier.",
+			},
+			{
+				title: "City location",
+				body: "Set locationMode to city and enter a city name such as Berlin. Open-Meteo resolves the city before retrieving the forecast.",
+			},
+			{
+				title: "Coordinate location",
+				body: "Set locationMode to coordinates and provide latitude and longitude for a precise fixed location. You can also set a custom display name.",
+			},
+		],
+		requirements: [
+			"A Mac running macOS",
+			"Übersicht installed and open",
+			"Node.js 20 or later",
+			"An internet connection",
+		],
+		installSteps: [
+			"Download and unzip berries-weather.widget.zip from the repository.",
+			"Copy berries-weather.widget into ~/Library/Application Support/Übersicht/widgets/.",
+			"Keep the folder name exactly as berries-weather.widget.",
+			"Edit config.json if you want to change location, units, forecast duration, or desktop position, then refresh Übersicht.",
+		],
+		config: `{
+  "locationMode": "automatic",
+  "locationQuery": "",
+  "latitude": null,
+  "longitude": null,
+  "displayName": "",
+  "outlookHours": 4,
+  "units": "celsius",
+  "position": { "top": 40, "left": 40 }
+}`,
+		configNotes: [
+			"Set units to fahrenheit for Fahrenheit.",
+			"Set outlookHours from 1 to 12 to control the short forecast window.",
+			"Adjust position.top and position.left to place the widget on your desktop.",
+		],
+		privacy: "The widget itself does not use analytics, telemetry, an API key, or macOS Location Services. Automatic location sends your public IP to ipwho.is to resolve an approximate location; Open-Meteo receives coordinates for weather retrieval, or a city query in city mode. The widget stores resolved city, coordinates, timezone, and a timestamp for up to 24 hours, but never stores your IP address or weather responses.",
+		troubleshooting: [
+			"Node.js is required: install Node.js 20 or later, then refresh Übersicht.",
+			"Location unavailable: try again later or use city or coordinate location.",
+			"Location not found: check the city query or provide valid coordinates.",
+			"The widget does not appear: confirm the folder is named berries-weather.widget and is inside Übersicht's widgets folder.",
+		],
+	},
+	reminders: {
+		productName: "Berries Reminders",
+		eyebrow: "Private Apple Reminders widget for macOS",
+		h1: "Apple Reminders widget for Übersicht",
+		seoTitle: "Berries Reminders: Apple Reminders Widget for Übersicht on macOS",
+		seoDescription: "Berries Reminders is a private, local Apple Reminders widget for Übersicht on macOS. See upcoming tasks, due dates, and list colours on your desktop.",
+		lead: "See the next incomplete Apple Reminders from your selected lists in a calm, compact task feed on your macOS desktop.",
+		overview: "Berries Reminders reads incomplete tasks from Apple Reminders through EventKit, preserves list colours, highlights overdue tasks, and keeps undated reminders visible instead of silently discarding them. A lightweight View all action opens the native Reminders app when you need the full list.",
+		features: [
+			"Upcoming incomplete reminders across Apple Reminders lists",
+			"Optional filtering to selected reminder lists",
+			"List colours, due dates, notes, and source-list names",
+			"Smart ordering: overdue, today, upcoming, then undated reminders",
+			"Footer counts for eligible reminders, overdue, today, and this week",
+			"A View all link that opens the native Reminders app",
+			"No API keys, accounts, analytics, or network requests",
+		],
+		requirements: [
+			"A Mac with Apple Reminders configured",
+			"Übersicht",
+			"Node.js",
+			"Swift from Xcode or the Xcode Command Line Tools",
+		],
+		installSteps: [
+			"Install and open Übersicht.",
+			"Install Node.js and Apple's Xcode Command Line Tools.",
+			"Copy berries-reminders.widget into ~/Library/Application Support/Übersicht/widgets/.",
+			"Refresh Übersicht and allow Reminders access when macOS asks.",
+			"Edit config.json to control placement, width, visible lists, and the number of reminders shown.",
+		],
+		config: `{
+  "position": { "top": 40, "left": 40 },
+  "width": 480,
+  "maxItems": 5,
+  "lists": [],
+  "showNotes": true,
+  "showDueDates": true,
+  "showListName": true
+}`,
+		configNotes: [
+			"An empty lists array shows reminders from every Apple Reminders list.",
+			"Add list names only when you want to limit the widget to selected lists.",
+			"List-name matching is case-insensitive.",
+		],
+		privacy: "The widget runs locally on your Mac. Reminder data is retrieved through EventKit and passed directly to Übersicht for display. It does not send task titles, notes, dates, or list information to an external server, and it has no analytics, telemetry, account, API key, or persistent reminder-data cache.",
+		troubleshooting: [
+			"Node.js is required: install Node.js in a supported location, then refresh Übersicht.",
+			"Access needed: allow Reminders access in System Settings for the app macOS identifies, then refresh Übersicht.",
+			"Selected lists not found: clear lists to show all reminders, or update the configured list names.",
+			"All caught up!: the eligible lists have no incomplete reminders.",
+		],
+	},
+};
+const pageCopy = pageCopyBySlug[widget.slug ?? "calendar"] ?? pageCopyBySlug.calendar;
+
+const title = pageCopy.seoTitle;
+const description = pageCopy.seoDescription;
+const canonicalUrl = `https://widgets.hypeberries.com/widgets/${widget.slug}/`;
+const isAvailable = widget.status === "available";
+const structuredData = isAvailable ? {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: pageCopy.productName,
+	applicationCategory: "ProductivityApplication",
+	operatingSystem: "macOS",
+	description,
+	url: canonicalUrl,
+		downloadUrl: widget.href,
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+		availability: "https://schema.org/InStock",
+		url: widget.href,
+	},
+} : {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	name: pageCopy.productName,
+	description,
+	url: canonicalUrl,
+};
+
+const pageNav = [
+	{ label: "Widgets", href: "/#widgets" },
+	{ label: "About Übersicht", href: "/#about-ubersicht" },
+	{ label: "GitHub", href: "https://github.com/hypeberries" },
+];
+---
+
+<BaseLayout title={title} description={description} structuredData={structuredData}>
+	<div id="top" class="page-shell">
+		<Header items={pageNav} />
+		<main>
+			<section class="widget-detail section">
+				<div class="container widget-detail__intro">
+					<p class="widget-detail__eyebrow">{pageCopy.eyebrow}</p>
+					<h1>{pageCopy.h1}</h1>
+					<p class="widget-detail__lead">{pageCopy.lead}</p>
+					{
+						isAvailable ? (
+							<a class="button button--dark" href={widget.href} target="_blank" rel="noreferrer">Get it on GitHub</a>
+						) : (
+							<p class="widget-detail__status">In testing. Available soon.</p>
+						)
+					}
+				</div>
+			</section>
+
+			<section class="section section--bordered">
+				<div class="container widget-detail__grid">
+					<div class="widget-detail__image">
+						{widget.image && <Image src={widget.image.src} alt={widget.image.alt} loading="lazy" decoding="async" />}
+					</div>
+					<article class="widget-detail__content">
+						<section>
+							<h2>What it does</h2>
+							<p>{pageCopy.overview}</p>
+						</section>
+						<section>
+							<h2>Features</h2>
+							<ul>{pageCopy.features.map((feature) => <li>{feature}</li>)}</ul>
+						</section>
+						{pageCopy.howItWorks && (
+							<section>
+								<h2>How it works</h2>
+								<ol>{pageCopy.howItWorks.map((step) => <li>{step}</li>)}</ol>
+							</section>
+						)}
+						{pageCopy.locationSettings && (
+							<section>
+								<h2>Location settings</h2>
+								<div class="widget-detail__subsections">
+									{pageCopy.locationSettings.map((setting) => <div><h3>{setting.title}</h3><p>{setting.body}</p></div>)}
+								</div>
+							</section>
+						)}
+						<section>
+							<h2>Requirements</h2>
+							<ul>{pageCopy.requirements.map((requirement) => <li>{requirement}</li>)}</ul>
+						</section>
+						<section>
+							<h2>Install {pageCopy.productName}</h2>
+							<ol>{pageCopy.installSteps.map((step) => <li>{step}</li>)}</ol>
+							<a class="text-link" href="https://tracesof.net/uebersicht/" target="_blank" rel="noreferrer">Download Übersicht</a>
+						</section>
+						<section>
+							<h2>Configuration</h2>
+							<p>Edit config.json inside the widget folder, then refresh Übersicht.</p>
+							<pre><code>{pageCopy.config}</code></pre>
+							<ul>{pageCopy.configNotes.map((note) => <li>{note}</li>)}</ul>
+						</section>
+						<section>
+							<h2>Privacy</h2>
+							<p>{pageCopy.privacy}</p>
+						</section>
+						<section>
+							<h2>Troubleshooting</h2>
+							<ul>{pageCopy.troubleshooting.map((item) => <li>{item}</li>)}</ul>
+						</section>
+					</article>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</div>
+</BaseLayout>

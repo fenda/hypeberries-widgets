@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title">
+  <title id="title">Hypeberries profile mark</title>
+  <rect width="1024" height="1024" rx="224" fill="#fbf7f4"/>
+  <rect x="116" y="116" width="792" height="792" rx="176" fill="#cf087e"/>
+  <text x="512" y="626" fill="#fbf7f4" font-family="Arial, Helvetica, sans-serif" font-size="362" font-weight="700" letter-spacing="-38" text-anchor="middle">{h}</text>
+</svg>

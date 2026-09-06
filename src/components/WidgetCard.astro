@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import WidgetVisual from "./WidgetVisual.astro";
+import type { Widget } from "../data/site";
+
+interface Props {
+	widget: Widget;
+	variant?: "public" | "private";
+}
+
+const { widget, variant = "public" } = Astro.props;
+const isPrivate = variant === "private";
+---
+
+<article class:list={["widget-card", isPrivate && "widget-card--private"]}>
+	{
+		widget.image ? (
+			<Image
+				class="widget-card__image"
+				src={widget.image.src}
+				alt={widget.image.alt}
+				loading="lazy"
+				decoding="async"
+			/>
+		) : (
+			<WidgetVisual visual={widget.visual} />
+		)
+	}
+	<div class="widget-card__body">
+		<h3>{widget.slug ? <a href={`/widgets/${widget.slug}/`}>{widget.name}</a> : widget.name}</h3>
+		<p>{widget.description}</p>
+			{
+				!isPrivate && (widget.status === "available" ? (
+					widget.slug ? (
+						<a class="widget-card__cta" href={`/widgets/${widget.slug}/`}>
+							{widget.cta ?? "See more"}
+						</a>
+					) : (
+						<a class="widget-card__cta" href={widget.href} target="_blank" rel="noreferrer">
+							{widget.cta ?? "Open"}
+						</a>
+					)
+				) : (
+					<div class="widget-card__status">
+						<span>{widget.availabilityLabel ?? "In testing"}</span>
+						<p>{widget.note}</p>
+					</div>
+				))
+			}
+	</div>
+</article>

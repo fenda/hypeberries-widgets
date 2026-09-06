@@ -1,0 +1,79 @@
+---
+const measurementId = "G-GYTZW8E443";
+---
+
+<aside class="consent-banner" data-consent-banner aria-labelledby="consent-title" hidden>
+	<div class="consent-banner__content">
+		<p class="consent-banner__eyebrow">Your privacy</p>
+		<h2 id="consent-title">Help us improve Hypeberries</h2>
+		<p>We use optional Google Analytics to understand which pages are useful. Analytics stays off unless you choose to accept it.</p>
+	</div>
+	<div class="consent-banner__actions">
+		<button class="consent-banner__button consent-banner__button--accept" type="button" data-consent-accept>Accept analytics</button>
+		<button class="consent-banner__button" type="button" data-consent-decline>Decline</button>
+		<a href="/privacy/">Privacy details</a>
+	</div>
+</aside>
+
+<script is:inline define:vars={{ measurementId }}>
+	const consentKey = "hypeberries-analytics-consent";
+	const banner = document.querySelector("[data-consent-banner]");
+	const acceptButton = document.querySelector("[data-consent-accept]");
+	const declineButton = document.querySelector("[data-consent-decline]");
+	const preferenceButtons = document.querySelectorAll("[data-open-consent]");
+
+	function loadAnalytics() {
+		if (window.hypeberriesAnalyticsLoaded) return;
+		window.hypeberriesAnalyticsLoaded = true;
+		window.dataLayer = window.dataLayer || [];
+		window.gtag = function gtag() { window.dataLayer.push(arguments); };
+		window.gtag("js", new Date());
+		window.gtag("config", measurementId, { anonymize_ip: true });
+
+		const script = document.createElement("script");
+		script.async = true;
+		script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+		document.head.append(script);
+	}
+
+	function readConsent() {
+		try {
+			return localStorage.getItem(consentKey);
+		} catch {
+			return null;
+		}
+	}
+
+	function saveConsent(value) {
+		try {
+			localStorage.setItem(consentKey, value);
+		} catch {
+			// Analytics remains off if the preference cannot be stored.
+		}
+	}
+
+	function showBanner() {
+		if (banner) banner.hidden = false;
+	}
+
+	function hideBanner() {
+		if (banner) banner.hidden = true;
+	}
+
+	function setConsent(value) {
+		saveConsent(value);
+		hideBanner();
+		if (value === "accepted") loadAnalytics();
+	}
+
+	const storedConsent = readConsent();
+	if (storedConsent === "accepted") {
+		loadAnalytics();
+	} else if (storedConsent !== "declined") {
+		showBanner();
+	}
+
+	acceptButton?.addEventListener("click", () => setConsent("accepted"));
+	declineButton?.addEventListener("click", () => setConsent("declined"));
+	preferenceButtons.forEach((button) => button.addEventListener("click", showBanner));
+</script>

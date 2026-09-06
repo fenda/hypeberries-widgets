@@ -1,0 +1,61 @@
+@use "./variables" as *;
+
+.page-shell {
+	min-height: 100vh;
+}
+
+.container {
+	width: min(1280px, calc(100vw - 3rem));
+	margin: 0 auto;
+}
+
+.section {
+	padding: 2rem 0;
+}
+
+.section--bordered {
+	border-top: 1px solid $border;
+}
+
+.editorial-grid {
+	display: grid;
+	grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+	gap: 3rem;
+	align-items: start;
+	padding: 2rem 0 3rem;
+}
+
+.editorial-grid--stacked {
+	grid-template-columns: minmax(0, 1fr);
+	gap: 2.5rem;
+}
+
+.editorial-grid--stacked .section-intro {
+	max-width: 44rem;
+}
+
+.editorial-grid--shelf {
+	grid-template-columns: minmax(13rem, 0.35fr) minmax(0, 1fr);
+	gap: clamp(2rem, 5vw, 5rem);
+}
+
+.editorial-grid--shelf .section-intro {
+	position: sticky;
+	top: 6.5rem;
+}
+
+@media (max-width: $bp-medium) {
+	.container {
+		width: min(100vw - 1.5rem, 1280px);
+	}
+
+	.editorial-grid {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		padding: 1.5rem 0 2.5rem;
+	}
+
+	.editorial-grid--shelf .section-intro {
+		position: static;
+	}
+}

@@ -1,0 +1,18 @@
+---
+import { Image } from "astro:assets";
+import heroMacbook from "../assets/hero-macbook-clean.png";
+---
+
+<figure class="desktop-figure">
+	<div class="desktop-hero-frame">
+		<Image
+			class="desktop-hero-image"
+			src={heroMacbook}
+			alt="A Hypeberries desktop shown on a MacBook Pro"
+			loading="eager"
+			decoding="async"
+			fetchpriority="high"
+		/>
+	</div>
+	<figcaption>My desktop, powered by Übersicht.</figcaption>
+</figure>

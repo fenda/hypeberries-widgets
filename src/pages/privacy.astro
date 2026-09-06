@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const navigation = [
+	{ label: "Widgets", href: "/#widgets" },
+	{ label: "About Übersicht", href: "/#about-ubersicht" },
+	{ label: "GitHub", href: "https://github.com/hypeberries" },
+];
+---
+
+<BaseLayout title="Privacy | Hypeberries Widgets" description="How Hypeberries Widgets handles analytics and consent.">
+	<div id="top" class="page-shell">
+		<Header items={navigation} />
+		<main>
+			<section class="privacy-page section">
+				<div class="container privacy-page__content">
+					<p class="widget-detail__eyebrow">Privacy</p>
+					<h1>Simple, optional analytics.</h1>
+					<p class="privacy-page__lead">Hypeberries Widgets works without analytics. We only enable Google Analytics after you choose to accept it.</p>
+
+					<section>
+						<h2>What we use</h2>
+						<p>When you accept analytics, Google Analytics helps us understand general site use, such as page visits and referral sources. It does not give us access to your widget data, calendar, reminders, location, or desktop.</p>
+					</section>
+
+					<section>
+						<h2>Your choice</h2>
+						<p>If you decline, Google Analytics is not loaded. We store your choice in your browser so the banner does not reappear on every page visit. You can change your decision at any time.</p>
+						<button class="text-link privacy-page__preferences" type="button" data-open-consent>Change analytics preference</button>
+					</section>
+
+					<section>
+						<h2>Third parties</h2>
+						<p>Analytics is provided by Google. The weather widget can also use the services described on its own widget page when you choose automatic or city-based location; that behavior is separate from this website.</p>
+					</section>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</div>
+</BaseLayout>

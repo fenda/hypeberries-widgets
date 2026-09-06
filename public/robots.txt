@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://widgets.hypeberries.com/sitemap.xml

@@ -1,0 +1,19 @@
+$bg: #f8f5f1;
+$border: rgba(28, 18, 48, 0.08);
+$shadow: 0 24px 60px rgba(28, 18, 48, 0.08);
+$text: #17131f;
+$muted: rgba(23, 19, 31, 0.72);
+$muted-strong: rgba(23, 19, 31, 0.9);
+$accent: #7b57ff;
+$surface: rgba(255, 255, 255, 0.78);
+$card-bg: linear-gradient(180deg, rgba(18, 19, 34, 0.96), rgba(10, 12, 24, 0.98));
+$desktop-bg:
+	radial-gradient(circle at top, rgba(185, 146, 255, 0.25), transparent 26%),
+	linear-gradient(180deg, rgba(47, 34, 84, 0.9), rgba(12, 14, 28, 0.98) 62%),
+	linear-gradient(135deg, #3b2962, #131726 60%, #0a0b12);
+$serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+$sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$bp-large: 1180px;
+$bp-medium: 920px;
+$bp-small: 640px;

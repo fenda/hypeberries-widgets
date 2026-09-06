@@ -1,17 +1,94 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import DeviceMockup from "../components/DeviceMockup.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import SectionIntro from "../components/SectionIntro.astro";
+import StepCard from "../components/StepCard.astro";
+import WidgetCard from "../components/WidgetCard.astro";
+import {
+	heroCopy,
+	navItems,
+	personalWidgets,
+	publicWidgets,
+	steps,
+} from "../data/site";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Free Übersicht Widgets for macOS | Hypeberries"
+  description="Download free Übersicht widgets for macOS. Hypeberries offers Calendar, Weather, and Reminders desktop widgets, with Streaks in testing."
+>
+	<div id="top" class="page-shell">
+		<Header items={navItems} />
+
+		<main>
+			<section class="hero section">
+				<div class="container hero__grid">
+					<div class="hero__copy">
+						<h1>{heroCopy.title}</h1>
+						<p class="hero__highlight">{heroCopy.highlight}</p>
+						<div class="hero__body">
+							{heroCopy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+						</div>
+						<div class="hero__actions">
+							<a class="button button--dark" href="#widgets">Explore the widgets</a>
+							<a class="button button--text" href="#about-ubersicht">Why Übersicht</a>
+						</div>
+					</div>
+						<DeviceMockup />
+				</div>
+			</section>
+
+			<section id="widgets" class="section section--bordered">
+				<div class="container editorial-grid editorial-grid--shelf">
+					<SectionIntro
+						title="Widgets to download."
+							body={[
+								"Free Übersicht widgets for macOS, designed to keep the essentials within view.",
+								"Calendar, Weather, and Reminders are available now. Streaks is in testing.",
+							]}
+						linkLabel="All widgets on GitHub"
+						linkHref="https://github.com/hypeberries"
+					/>
+					<div class="widget-grid widget-grid--public">
+						{publicWidgets.map((widget) => <WidgetCard widget={widget} />)}
+					</div>
+				</div>
+			</section>
+
+			<section id="about-ubersicht" class="section section--bordered">
+				<div class="container editorial-grid editorial-grid--shelf">
+					<SectionIntro
+						title="Built on Übersicht."
+						body={[
+							"Übersicht is a free, open-source macOS app for placing web-powered widgets directly on your desktop.",
+							"It gave me the flexibility to build a desktop around the information I actually use.",
+						]}
+						linkLabel="About Übersicht"
+						linkHref="https://tracesof.net/uebersicht/"
+					/>
+					<div class="widget-grid widget-grid--private">
+						{personalWidgets.map((widget) => <WidgetCard widget={widget} variant="private" />)}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--bordered">
+					<div class="container editorial-grid editorial-grid--shelf editorial-grid--steps">
+					<SectionIntro
+							title="Start using widgets."
+							body={[
+								"Install Übersicht, download a widget, and add it to your desktop.",
+							]}
+					/>
+					<div class="step-grid">
+						{steps.map((step) => <StepCard {...step} />)}
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<Footer />
+	</div>
+</BaseLayout>

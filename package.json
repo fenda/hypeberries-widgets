@@ -1,5 +1,5 @@
 {
-  "name": "users-fernandasampaio-work-hypeberries-widgets",
+  "name": "hypeberries-widgets",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -8,13 +8,19 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.9"
+    "astro": "^7.2.9",
+    "sass": "^1.103.1"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,0 +1,49 @@
+---
+import "../styles/global.scss";
+import ConsentBanner from "../components/ConsentBanner.astro";
+
+interface Props {
+	title?: string;
+	description?: string;
+	structuredData?: Record<string, unknown>;
+}
+
+const {
+	title = "Hypeberries Widgets",
+	description = "Desktop widgets for Übersicht, built by Hypeberries.",
+	structuredData,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL("https://widgets.hypeberries.com");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const defaultStructuredData = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "Hypeberries Widgets",
+	url: canonicalUrl,
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content="https://widgets.hypeberries.com/images/desktop-overview.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData ?? defaultStructuredData)}></script>
+	</head>
+	<body>
+		<slot />
+		<ConsentBanner />
+	</body>
+</html>

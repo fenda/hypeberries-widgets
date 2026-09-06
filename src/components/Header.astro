@@ -1,0 +1,25 @@
+---
+interface Props {
+	items: Array<{ label: string; href: string }>;
+}
+
+const { items } = Astro.props;
+const homeHref = Astro.url.pathname === "/" ? "#top" : "/";
+---
+
+<header class="site-header">
+	<div class="container site-header__inner">
+		<a class="brand" href={homeHref} aria-label="Hypeberries home">
+			<img src="/images/logo.png" alt="Hypeberries" width="173" height="30" loading="eager" decoding="async" fetchpriority="high" />
+		</a>
+		<nav aria-label="Primary">
+			<ul class="site-nav">
+				{
+					items.map((item) => (
+						<li><a href={item.href}>{item.label}</a></li>
+					))
+				}
+			</ul>
+		</nav>
+	</div>
+</header>
