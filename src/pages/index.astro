@@ -26,8 +26,7 @@ import {
 			<section class="hero section">
 				<div class="container hero__grid">
 					<div class="hero__copy">
-						<h1>{heroCopy.title}</h1>
-						<p class="hero__highlight">{heroCopy.highlight}</p>
+						<h1>{heroCopy.title} <span>{heroCopy.subtitle}</span></h1>
 						<div class="hero__body">
 							{heroCopy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
 						</div>

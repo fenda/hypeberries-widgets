@@ -56,10 +56,11 @@
 	letter-spacing: -0.04em;
 }
 
-.hero__highlight {
-	margin: 0.9rem 0 0;
-	font-family: $serif;
-	font-size: clamp(1.75rem, 2.5vw, 2.7rem);
+
+.hero__copy h1 span {
+	display: block;
+	margin-top: 0.35em;
+	font-size: 0.62em;
 	font-style: italic;
 	line-height: 1;
 	color: #7f5dff;
