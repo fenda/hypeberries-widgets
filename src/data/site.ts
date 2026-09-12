@@ -92,7 +92,7 @@ export const navItems = [
 ];
 
 export const heroCopy = {
-	title: "I wanted a desktop that worked the way I do.",
+	title: "I wanted a desktop that worked the way I do. So I built widgets for Übersicht.",
 	highlight: "Then I found Übersicht.",
 	paragraphs: [
 		"I tried several desktop apps, but none let me arrange information the way I wanted. Then I found Übersicht, a free macOS app that lets web-powered widgets live on the desktop. I started building the small tools I wanted to see every day.",
@@ -194,7 +194,7 @@ export const publicWidgets: Widget[] = [
 		slug: "calendar",
 		status: "available",
 		href: "https://github.com/hypeberries/berries-calendar",
-		cta: "See more",
+		cta: "View Calendar widget",
 		description: "Upcoming events on your desktop, without opening your calendar.",
 		image: {
 			src: calendarImage,
@@ -216,7 +216,7 @@ export const publicWidgets: Widget[] = [
 		slug: "weather",
 		status: "available",
 		href: "https://github.com/hypeberries/berries-weather",
-		cta: "See more",
+		cta: "View Weather widget",
 		description: "Current conditions and a short forecast, right on your desktop.",
 		image: {
 			src: weatherImage,
@@ -242,7 +242,7 @@ export const publicWidgets: Widget[] = [
 		slug: "reminders",
 		status: "available",
 		href: "https://github.com/hypeberries/berries-reminders",
-		cta: "See more",
+		cta: "View Reminders widget",
 		description: "A focused task list for what needs attention next.",
 		image: {
 			src: remindersImage,
@@ -280,7 +280,7 @@ export const publicWidgets: Widget[] = [
 		name: "Reading",
 		slug: "reading",
 		status: "available",
-		cta: "See more",
+		cta: "View Reading widget",
 		description: "My current read and page progress, always in view.",
 		image: {
 			src: readingImage,

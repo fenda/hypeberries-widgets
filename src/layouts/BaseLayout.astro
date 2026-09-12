@@ -22,6 +22,14 @@ const defaultStructuredData = {
 	name: "Hypeberries Widgets",
 	url: canonicalUrl,
 };
+const organizationStructuredData = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: "Hypeberries",
+	url: siteUrl.href,
+	logo: new URL("/hypeberries-github-avatar.png", siteUrl).href,
+};
+const pageStructuredData = structuredData ?? defaultStructuredData;
 ---
 
 <!doctype html>
@@ -40,7 +48,7 @@ const defaultStructuredData = {
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:image" content="https://widgets.hypeberries.com/images/desktop-overview.png" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData ?? defaultStructuredData)}></script>
+		<script is:inline type="application/ld+json" set:html={JSON.stringify([organizationStructuredData, pageStructuredData])}></script>
 	</head>
 	<body>
 		<slot />

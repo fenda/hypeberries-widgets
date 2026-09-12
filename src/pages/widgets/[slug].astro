@@ -479,7 +479,7 @@ const pageNav = [
 			<section class="section section--bordered">
 				<div class="container widget-detail__grid">
 					<div class="widget-detail__image">
-						{widget.image && <Image src={widget.image.src} alt={widget.image.alt} loading="lazy" decoding="async" />}
+						{widget.image && <Image src={widget.image.src} alt={widget.image.alt} title={widget.image.alt} loading="lazy" decoding="async" />}
 					</div>
 					<article class="widget-detail__content">
 						{pageCopy.contentSections ? (
