@@ -169,22 +169,6 @@ export const personalWidgets: Widget[] = [
 		},
 	},
 	{
-		name: "Reading",
-		status: "private",
-		description: "My current read and page progress, always in view.",
-		image: {
-			src: readingImage,
-			alt: "Reading and habit streak widgets on the desktop",
-		},
-		visual: {
-			type: "reading",
-			accent: "violet",
-			title: "The Pragmatic Programmer",
-			progress: "280 / 552 pages",
-			note: "Currently reading",
-		},
-	},
-	{
 		name: "Health Score",
 		status: "private",
 		description: "A weekly view of movement, activity, and health goals.",
@@ -289,6 +273,24 @@ export const publicWidgets: Widget[] = [
 				{ label: "Workout", note: "Thu workout", value: "1/3" },
 				{ label: "Water plants", note: "Every 4 days", value: "1" },
 			],
+		},
+	},
+	{
+		name: "Reading",
+		status: "testing",
+		description: "My current read and page progress, always in view.",
+		image: {
+			src: readingImage,
+			alt: "Reading widget showing progress through Wool by Hugh Howey",
+		},
+		note: "Currently in testing.",
+		availabilityLabel: "In testing",
+		visual: {
+			type: "reading",
+			accent: "violet",
+			title: "Wool",
+			progress: "294 / 584 pages",
+			note: "Currently reading",
 		},
 	},
 ];
