@@ -256,6 +256,7 @@ export const publicWidgets: Widget[] = [
 	},
 	{
 		name: "Streaks",
+		slug: "streaks",
 		status: "testing",
 		description: "Habit progress that helps keep momentum going.",
 		image: {
@@ -278,14 +279,13 @@ export const publicWidgets: Widget[] = [
 	{
 		name: "Reading",
 		slug: "reading",
-		status: "testing",
+		status: "available",
+		cta: "See more",
 		description: "My current read and page progress, always in view.",
 		image: {
 			src: readingImage,
 			alt: "Reading widget showing progress through Wool by Hugh Howey",
 		},
-		note: "Currently in testing.",
-		availabilityLabel: "In testing",
 		visual: {
 			type: "reading",
 			accent: "violet",

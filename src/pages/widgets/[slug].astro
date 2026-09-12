@@ -21,6 +21,7 @@ type ContentSection = {
 	bullets?: string[];
 	postBulletsParagraphs?: string[];
 	code?: string;
+	postCodeParagraphs?: string[];
 	steps?: Array<{ body: string; code?: string }>;
 };
 
@@ -221,6 +222,97 @@ const pageCopyBySlug: Record<string, WidgetPageCopy> = {
 			"All caught up!: the eligible lists have no incomplete reminders.",
 		],
 	},
+	streaks: {
+		productName: "Berries Streaks",
+		eyebrow: "Private habit tracker for macOS",
+		h1: "Berries Streaks: A Local macOS Habit Tracker for Your Desktop",
+		seoTitle: "Berries Streaks: A Private macOS Habit Tracker Widget for Übersicht",
+		seoDescription: "Berries Streaks is a private, local-first habit tracker for macOS and Übersicht. Track daily habits, weekly goals, recurring chores, streaks, and progress directly on your desktop.",
+		lead: "Berries Streaks is a compact habit tracker widget for macOS, built for Übersicht. It keeps today's habits visible on the desktop, making it easier to follow daily routines, weekly exercise targets, and recurring household tasks without opening another app.",
+		overview: "",
+		features: [],
+		requirements: [],
+		installSteps: [],
+		config: "",
+		configNotes: [],
+		privacy: "",
+		troubleshooting: [],
+		contentSections: [
+			{
+				title: "What Berries Streaks Does",
+				paragraphs: [
+					"The widget is part of Hypeberries and is designed around a simple question: what is due today, and how am I doing?",
+					"Berries Streaks is local-first. Habit configuration and completion history stay on the Mac. There are no accounts, cloud sync, analytics, telemetry, or network requests.",
+					"Berries Streaks turns a small JSON configuration into a desktop habit dashboard. Each visible row includes a completion circle, icon, habit name, frequency, and a relevant metric such as a streak, weekly progress, or an upcoming due reminder.",
+				],
+				bullets: [
+					"Daily habits such as reading, taking vitamins, or weighing in",
+					"Selected weekday routines such as stretching on Monday, Wednesday, and Friday",
+					"Weekly targets such as working out three times per week",
+					"Recurring intervals for chores such as watering plants, cleaning a coffee machine, or monthly check-ins",
+					"Daily, weekday, interval, and successful-week streaks",
+					"One-click completion and same-day undo",
+					"Font Awesome Free icons, including Solid, Regular, and Brands styles",
+					"Explicit colors or deterministic automatic accent colors",
+					"Week-based interval configuration such as everyWeeks: 2",
+					"A subtle Due tomorrow preview for recurring chores",
+				],
+			},
+			{
+				title: "Streaks and Weekly Goals",
+				paragraphs: [
+					"Daily habits build a streak from consecutive completed calendar days. Weekday habits count consecutive required occurrences, so unscheduled days never break a streak.",
+					"For flexible weekly goals, Berries Streaks tracks both current progress and successful-week streaks. A habit configured as 3x per week shows progress such as 2 / 3. Once the target is reached, the widget can show a week streak based on consecutive successful weeks.",
+					"An incomplete current week does not prematurely break an existing weekly streak. The streak extends immediately when the target is met and resets only after a completed week falls short.",
+				],
+			},
+			{
+				title: "Recurring Chores Without Moving Deadlines",
+				paragraphs: [
+					"Interval habits use stable anchored recurrence. A task configured for every two weeks stays on that cadence even if it is completed late or missed entirely.",
+					"You can use either day-based or week-based intervals:",
+				],
+				code: '{ "type": "interval", "everyDays": 4 }\n\n{ "type": "interval", "everyWeeks": 2 }',
+				postCodeParagraphs: [
+					"Both forms use the same reliable scheduling logic. Add an optional startDate when a task needs a specific first occurrence. If no start date is supplied, Berries Streaks stores the first loaded local date as a stable anchor.",
+					"Recurring habits remain hidden until they are relevant. On the day before a task is due, the widget shows a disabled Due tomorrow preview so the next chore is visible without being accidentally completed early.",
+				],
+			},
+			{
+				title: "Installation",
+				paragraphs: ["Berries Streaks requires macOS, Übersicht, and Node.js 20 or later."],
+				steps: [
+					{ body: "Install and open Übersicht at least once." },
+					{ body: "Open Terminal." },
+					{ body: "Go to the Berries Streaks project folder.", code: "cd /Users/fernandasampaio/Work/widgets/berries-streaks-widget" },
+					{ body: "Install the development widget.", code: "npm run install" },
+					{ body: "Refresh Übersicht. The installer creates a development symlink at ~/Library/Application Support/Übersicht/widgets/berries-streaks.widget and does not replace other Übersicht widgets." },
+				],
+			},
+			{
+				title: "Configure Your Habits",
+				paragraphs: ["Edit berries-streaks.widget/config.json. A simple daily habit looks like this:"],
+				code: `{
+  "id": "read",
+  "name": "Read",
+  "icon": "book-open",
+  "color": "#b07aff",
+  "schedule": {
+    "type": "daily"
+  }
+}`,
+				postCodeParagraphs: ["The id is a stable identity for stored completion history. Keep it the same when renaming a habit. Colors are optional: if omitted, Berries Streaks assigns a consistent accent color from its built-in palette."],
+			},
+			{
+				title: "Private by Design",
+				paragraphs: [
+					"Completion history is stored locally at ~/Library/Application Support/Hypeberries/Berries Streaks/state.json.",
+					"The state file stores simple local calendar dates and stable interval anchors. It uses atomic writes to reduce the risk of partial files, removes duplicate same-day completions automatically, and keeps history for removed habits without rendering those habits.",
+					"Berries Streaks is currently a private experimental widget for real-world desktop testing. It is built to be calm, useful, and easy to glance at: a habit tracker that lives where the day already happens, on the Mac desktop.",
+				],
+			},
+		],
+	},
 	reading: {
 		productName: "Berries Reading",
 		eyebrow: "Private reading progress widget for macOS",
@@ -332,7 +424,8 @@ const pageCopy = pageCopyBySlug[widget.slug ?? "calendar"] ?? pageCopyBySlug.cal
 const title = pageCopy.seoTitle;
 const description = pageCopy.seoDescription;
 const canonicalUrl = `https://widgets.hypeberries.com/widgets/${widget.slug}/`;
-const isAvailable = widget.status === "available";
+const isAvailable = widget.status === "available" && Boolean(widget.href);
+const isTesting = widget.status === "testing";
 const structuredData = isAvailable ? {
 	"@context": "https://schema.org",
 	"@type": "SoftwareApplication",
@@ -376,9 +469,9 @@ const pageNav = [
 					{
 						isAvailable ? (
 							<a class="button button--dark" href={widget.href} target="_blank" rel="noreferrer">Get it on GitHub</a>
-						) : (
+						) : isTesting ? (
 							<p class="widget-detail__status">In testing. Available soon.</p>
-						)
+						) : null
 					}
 				</div>
 			</section>
@@ -397,6 +490,7 @@ const pageNav = [
 									{section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
 									{section.postBulletsParagraphs?.map((paragraph) => <p>{paragraph}</p>)}
 									{section.code && <pre><code>{section.code}</code></pre>}
+									{section.postCodeParagraphs?.map((paragraph) => <p>{paragraph}</p>)}
 									{section.steps && (
 										<ol>
 											{section.steps.map((step) => <li><p>{step.body}</p>{step.code && <pre><code>{step.code}</code></pre>}</li>)}
