@@ -277,6 +277,7 @@ export const publicWidgets: Widget[] = [
 	},
 	{
 		name: "Reading",
+		slug: "reading",
 		status: "testing",
 		description: "My current read and page progress, always in view.",
 		image: {
