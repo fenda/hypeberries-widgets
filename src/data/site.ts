@@ -257,14 +257,14 @@ export const publicWidgets: Widget[] = [
 	{
 		name: "Streaks",
 		slug: "streaks",
-		status: "testing",
+		status: "available",
+		href: "https://github.com/hypeberries/berries-streaks",
+		cta: "View Streaks widget",
 		description: "Habit progress that helps keep momentum going.",
 		image: {
 			src: streaksImage,
 			alt: "Streaks widget showing daily habits",
 		},
-		note: "Currently in testing.",
-		availabilityLabel: "In testing",
 		visual: {
 			type: "streaks",
 			accent: "orange",
