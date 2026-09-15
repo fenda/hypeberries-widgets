@@ -277,10 +277,10 @@ export const publicWidgets: Widget[] = [
 		},
 	},
 	{
-		name: "Reading",
+		name: "Currently Reading",
 		slug: "reading",
 		status: "available",
-		cta: "View Reading widget",
+		cta: "View Currently Reading widget",
 		description: "My current read and page progress, always in view.",
 		image: {
 			src: readingImage,
