@@ -2,15 +2,16 @@
 
 .page-shell {
 	min-height: 100vh;
+	overflow: clip;
 }
 
 .container {
-	width: min(1280px, calc(100vw - 3rem));
+	width: min(1360px, calc(100vw - 4rem));
 	margin: 0 auto;
 }
 
 .section {
-	padding: 2rem 0;
+	padding: clamp(5rem, 9vw, 9rem) 0;
 }
 
 .section--bordered {
@@ -20,9 +21,9 @@
 .editorial-grid {
 	display: grid;
 	grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
-	gap: 3rem;
+	gap: clamp(3rem, 7vw, 7rem);
 	align-items: start;
-	padding: 2rem 0 3rem;
+	padding: 0;
 }
 
 .editorial-grid--stacked {
@@ -35,8 +36,8 @@
 }
 
 .editorial-grid--shelf {
-	grid-template-columns: minmax(13rem, 0.35fr) minmax(0, 1fr);
-	gap: clamp(2rem, 5vw, 5rem);
+	grid-template-columns: minmax(15rem, 0.36fr) minmax(0, 1fr);
+	gap: clamp(3rem, 7vw, 7rem);
 }
 
 .editorial-grid--shelf .section-intro {
@@ -46,13 +47,13 @@
 
 @media (max-width: $bp-medium) {
 	.container {
-		width: min(100vw - 1.5rem, 1280px);
+		width: min(100vw - 2rem, 1360px);
 	}
 
 	.editorial-grid {
 		grid-template-columns: 1fr;
-		gap: 2rem;
-		padding: 1.5rem 0 2.5rem;
+		gap: 2.5rem;
+		padding: 0;
 	}
 
 	.editorial-grid--shelf .section-intro {

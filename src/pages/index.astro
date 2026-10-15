@@ -91,3 +91,62 @@ import {
 		<Footer />
 	</div>
 </BaseLayout>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const motion = gsap.matchMedia();
+
+	motion.add("(prefers-reduced-motion: no-preference)", () => {
+		gsap.from(".hero__copy > *", {
+			duration: 0.8,
+			y: 22,
+			opacity: 0,
+			stagger: 0.1,
+			ease: "power3.out",
+		});
+
+		gsap.fromTo(
+			".desktop-hero-image",
+			{ scale: 0.94, opacity: 0.82 },
+			{
+				scale: 1,
+				opacity: 1,
+				ease: "none",
+				scrollTrigger: {
+					trigger: ".hero",
+					start: "top 12%",
+					end: "bottom 28%",
+					scrub: 0.6,
+				},
+			},
+		);
+
+		gsap.utils.toArray<HTMLElement>(".section-intro, .widget-card, .step-card").forEach((element) => {
+			gsap.fromTo(
+				element,
+				{
+					y: 32,
+					opacity: 0,
+					scale: element.classList.contains("widget-card") ? 0.985 : 1,
+				},
+				{
+					duration: 0.75,
+					y: 0,
+					opacity: 1,
+					scale: 1,
+					ease: "power3.out",
+					immediateRender: false,
+					scrollTrigger: {
+						trigger: element,
+						start: "top 88%",
+						once: true,
+					},
+				},
+			);
+		});
+	});
+</script>
