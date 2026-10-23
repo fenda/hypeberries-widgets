@@ -4,14 +4,17 @@ interface Props {
 }
 
 const { items } = Astro.props;
-const homeHref = Astro.url.pathname === "/" ? "#top" : "/";
 ---
 
 <header class="site-header">
 	<div class="container site-header__inner">
-		<a class="brand" href={homeHref} aria-label="Hypeberries home">
-			<img src="/images/logo.png?v=20260915" alt="Hypeberries" title="Hypeberries" width="208" height="52" loading="eager" decoding="async" fetchpriority="high" />
-		</a>
+		<div class="brand-lockup">
+			<a class="brand" href="https://hypeberries.com/" aria-label="Hypeberries home">
+				<img src="/images/logo.png?v=20260915" alt="" width="208" height="52" loading="eager" decoding="async" fetchpriority="high" />
+			</a>
+			<span class="brand-lockup__separator" aria-hidden="true">/</span>
+			<a class="brand-lockup__product" href="/">Widgets</a>
+		</div>
 		<nav aria-label="Primary">
 			<ul class="site-nav">
 				{
