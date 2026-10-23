@@ -14,38 +14,51 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	padding: 0.9rem 0;
+	min-height: 76px;
+	padding: 0.65rem 0;
+	box-sizing: border-box;
 }
 
 .brand-lockup {
-	display: flex;
-	align-items: center;
-	gap: 0.7rem;
-	min-width: 0;
-}
-
-.brand {
-	display: inline-flex;
+	display: grid;
+	justify-items: start;
+	gap: 0.1rem;
 	flex: none;
-}
-
-.brand img {
-	width: 208px;
-	height: auto;
-}
-
-.brand-lockup__separator {
-	font-family: $serif;
-	font-size: 1.65rem;
-	line-height: 1;
-	color: rgba(23, 19, 31, 0.34);
+	min-width: 0;
+	white-space: nowrap;
 }
 
 .brand-lockup__product {
-	font-size: 1.05rem;
+	display: grid;
+	justify-items: start;
+	gap: 0.1rem;
+	flex: none;
+	color: rgba(23, 19, 31, 0.74);
+	text-decoration: none;
+}
+
+.brand-lockup__product img {
+	display: block;
+	width: auto;
+	height: 34px;
+}
+
+.brand-lockup__byline {
+	padding-left: 1.25rem;
+	font-size: 0.75rem;
+	font-weight: 550;
+	line-height: 1.1;
+	letter-spacing: 0.005em;
+}
+
+.brand-lockup__byline strong {
 	font-weight: 700;
-	letter-spacing: -0.02em;
-	color: $text;
+	color: $accent;
+}
+
+.brand-lockup__product:hover .brand-lockup__byline strong {
+	text-decoration: underline;
+	text-underline-offset: 0.12rem;
 }
 
 .site-nav {
@@ -709,6 +722,12 @@
 	display: inline-flex;
 }
 
+.site-footer__brand img {
+	display: block;
+	width: auto;
+	height: 38px;
+}
+
 .consent-banner {
 	position: fixed;
 	z-index: 20;
@@ -1097,15 +1116,13 @@
 }
 
 @media (max-width: $bp-medium) {
-	.site-header__inner,
 	.hero__grid {
 		display: grid;
 		grid-template-columns: 1fr;
 	}
 
 	.site-header__inner {
-		gap: 1rem;
-		justify-items: start;
+		gap: 1.25rem;
 	}
 
 	.site-nav {
@@ -1150,27 +1167,23 @@
 
 @media (max-width: $bp-small) {
 	.site-header__inner {
-		gap: 0.75rem;
+		width: min(100vw - 1rem, 1360px);
+		gap: 0.5rem;
 	}
 
-	.brand img {
-		width: 154px;
+	.brand-lockup__product img {
+		height: 31px;
 	}
 
-	.brand-lockup {
-		gap: 0.55rem;
-	}
-
-	.brand-lockup__separator {
-		display: none;
-	}
-
-	.brand-lockup__product {
-		font-size: 1rem;
+	.brand-lockup__byline {
+		font-size: 0.75rem;
 	}
 
 	.site-nav {
-		font-size: 0.88rem;
+		flex-wrap: nowrap;
+		gap: 0.65rem;
+		font-size: 0.72rem;
+		white-space: nowrap;
 	}
 
 	.site-footer__links {
@@ -1209,5 +1222,12 @@
 
 	.desktop-grid {
 		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 350px) {
+	.site-nav {
+		gap: 0.375rem;
+		font-size: 0.625rem;
 	}
 }
